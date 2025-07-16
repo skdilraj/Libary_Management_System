@@ -1,10 +1,14 @@
 @import "tailwindcss";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* :root {
 =======
 :root {
 >>>>>>> b40fd92 (Initial commit from Create Next App)
+=======
+/* :root {
+>>>>>>> 591d2f7 (folder structure add)
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -22,10 +26,14 @@
     --foreground: #ededed;
   }
 <<<<<<< HEAD
+<<<<<<< HEAD
 } */
 =======
 }
 >>>>>>> b40fd92 (Initial commit from Create Next App)
+=======
+} */
+>>>>>>> 591d2f7 (folder structure add)
 
 body {
   background: var(--background);
