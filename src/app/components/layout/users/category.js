@@ -1,3 +1,4 @@
+"use client";
 import { TbBooks } from "react-icons/tb";
 export default function Category() {
     const items = [

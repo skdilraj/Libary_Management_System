@@ -1,3 +1,4 @@
+"use client";
 export default function Latest_issue() {
     const issuedBooks = [
         {

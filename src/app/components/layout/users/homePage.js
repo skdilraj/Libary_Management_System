@@ -1,3 +1,4 @@
+"use client";
 import { IoNotifications } from "react-icons/io5";
 import Category from "./category";
 export default function Homepage() {
