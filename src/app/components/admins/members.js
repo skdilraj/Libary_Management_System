@@ -5,12 +5,12 @@ import { FaUpload } from "react-icons/fa6";
 
 export default function Members() {
   return (
-    <div className="flex h-screen bg-gray-100 font-sans w-screen">
+    <div className="flex  bg-gray-100 font-sans w-screen">
     
       {/* Main Section */}
-      <div className="flex-1 flex p-4 gap-4">
+      <div className="flex-1 flex flex-wrap p-4 gap-4 md:ml-2">
         {/* All Members List */}
-        <div className="w-[40%] bg-white rounded-lg shadow p-4 overflow-x-auto overflow-y-auto ">
+        <div className="w-full md:w-[40%] bg-white rounded-lg shadow p-4 overflow-x-auto overflow-y-auto ">
           <h2 className="text-3xl text-purple-600 font-semibold mb-4">All members</h2>
           <table className="w-full h-[75vh] text-left text-xl">
             <thead>

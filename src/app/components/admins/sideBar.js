@@ -24,9 +24,9 @@ export default function Sidebar() {
   const toggleSidebar = () => setIsCollapsed((prev) => !prev);
 
   const navItems = [
-    { label: "Home", route: "/", icon: <FaHome /> },
+    { label: "Home", route: "/admins", icon: <FaHome /> },
     { label: "Books", route: "/orders", icon: <IoBookSharp /> },
-    { label: "Members", route: "/docs", icon: <FaUsers /> },
+    { label: "Members", route: "/admins/members", icon: <FaUsers /> },
     { label: "Issue-Return", route: "/map", icon: <FaExchangeAlt /> },
     { label: "Reports", route: "/stats", icon: <FaChartBar /> },
   ];

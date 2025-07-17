@@ -20,8 +20,8 @@ export default function Sidebar() {
   const toggleSidebar = () => setIsCollapsed((prev) => !prev);
 
   const navItems = [
-    { label: "Home", route: "/components/users/home", icon: <FaHome /> },
-    { label: "Books", route: "/books", icon: <BsBookHalf /> },
+    { label: "Home", route: "/users/home", icon: <FaHome /> },
+    { label: "Borrow Books", route: "/users/borrow", icon: <BsBookHalf /> },
     { label: "Profile", route: "/profile", icon: <FaUser /> },
     { label: "Issue", route: "/issue", icon: <MdAssignmentReturn /> },
     { label: "Logout", route: "/logout", icon: <FaSignOutAlt /> },
