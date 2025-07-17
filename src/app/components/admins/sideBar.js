@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -14,7 +14,12 @@ import { IoBookSharp } from "react-icons/io5";
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const [isCollapsed, setIsCollapsed] = useState(false); // sidebar collapsed state
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [mounted, setMounted] = useState(false); // <== key fix
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const toggleSidebar = () => setIsCollapsed((prev) => !prev);
 
@@ -43,9 +48,14 @@ export default function Sidebar() {
           )}
         </div>
 
-        <button onClick={toggleSidebar} className="bg-slate-200 p-2 rounded-sm mr-[-30px]">
-          {isCollapsed ? <FaChevronRight /> : <FaChevronLeft />}
-        </button>
+        {mounted && (
+          <button
+            onClick={toggleSidebar}
+            className="bg-slate-200 p-2 rounded-sm mr-[-30px]"
+          >
+            {isCollapsed ? <FaChevronRight /> : <FaChevronLeft />}
+          </button>
+        )}
       </div>
 
       {/* Main Navigation */}

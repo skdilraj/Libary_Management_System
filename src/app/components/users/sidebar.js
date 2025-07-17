@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FaHome, FaUser, FaSignOutAlt, FaChevronLeft, FaChevronRight } from "react-icons/fa";
@@ -10,23 +10,27 @@ import { BsBookHalf } from "react-icons/bs";
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const [isCollapsed, setIsCollapsed] = useState(false); // sidebar collapsed state
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [mounted, setMounted] = useState(false); // <== key fix
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const toggleSidebar = () => setIsCollapsed((prev) => !prev);
 
   const navItems = [
-  { label: "Home", route: "/components/users/home", icon: <FaHome /> },
-  { label: "Books", route: "/books", icon: <BsBookHalf /> },
-  { label: "Profile", route: "/profile", icon: <FaUser /> },
-  { label: "Issue", route: "/issue", icon: <MdAssignmentReturn /> },
-  { label: "Logout", route: "/logout", icon: <FaSignOutAlt /> },
-];
+    { label: "Home", route: "/components/users/home", icon: <FaHome /> },
+    { label: "Books", route: "/books", icon: <BsBookHalf /> },
+    { label: "Profile", route: "/profile", icon: <FaUser /> },
+    { label: "Issue", route: "/issue", icon: <MdAssignmentReturn /> },
+    { label: "Logout", route: "/logout", icon: <FaSignOutAlt /> },
+  ];
 
   return (
     <div
-      className={`${
-        isCollapsed ? "w-20" : "w-60"
-      } sticky top-0 hidden  h-screen bg-white shadow-md md:flex md:flex-col px-4 py-6 space-y-6 transition-all duration-300`}
+      className={`${isCollapsed ? "w-20" : "w-60"
+        } sticky top-0 hidden  h-screen bg-white shadow-md md:flex md:flex-col px-4 py-6 space-y-6 transition-all duration-300`}
     >
       {/* Logo */}
       <div className="flex items-center justify-between">
@@ -39,9 +43,14 @@ export default function Sidebar() {
           )}
         </div>
 
-       <button onClick={toggleSidebar} className="bg-slate-200 p-2 rounded-sm mr-[-30px]">
-          {isCollapsed ? <FaChevronRight /> : <FaChevronLeft />}
-        </button>
+        {mounted && (
+          <button
+            onClick={toggleSidebar}
+            className="bg-slate-200 p-2 rounded-sm mr-[-30px]"
+          >
+            {isCollapsed ? <FaChevronRight /> : <FaChevronLeft />}
+          </button>
+        )}
       </div>
 
       {/* Main Navigation */}
@@ -53,11 +62,10 @@ export default function Sidebar() {
         {navItems.map((item) => (
           <Link key={item.label} href={item.route} passHref>
             <div
-              className={`flex h-[50px] my-2 items-center space-x-3 text-gray-700 hover:text-purple-600 cursor-pointer px-3 py-1 rounded hover:bg-purple-50 transition ${
-                pathname === item.route
+              className={`flex h-[50px] my-2 items-center space-x-3 text-gray-700 hover:text-purple-600 cursor-pointer px-3 py-1 rounded hover:bg-purple-50 transition ${pathname === item.route
                   ? "bg-purple-50 text-purple-600 font-medium"
                   : ""
-              }`}
+                }`}
             >
               <div className="text-2xl">{item.icon}</div>
               {!isCollapsed && <span className="text-md">{item.label}</span>}

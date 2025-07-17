@@ -9,6 +9,11 @@ import { BsThreeDots } from "react-icons/bs";
 import Chart from "./chart";
 
 export default function Dashboard() {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const items = [
         {
@@ -32,7 +37,7 @@ export default function Dashboard() {
             icon: <FaUserPlus />,
         },
     ];
-    
+
 
     const users = [
         { id: "10021", name: "Alex Roy", books: 12, dept: "Psychology" },
@@ -46,8 +51,8 @@ export default function Dashboard() {
         { id: "#G-95501-31", title: "Stroller", author: "Amanda Parrish", available: 90 },
         { id: "#R-773521-67", title: "The Secret Syllabus", author: "Terence C. Burnhum", available: 6 },
     ];
-   
-    
+
+
 
 
     return (
@@ -55,11 +60,13 @@ export default function Dashboard() {
             <div className="flex items-center justify-between px-2">
                 <h2 className="text-3xl">Dashboard</h2>
                 <div className="flex items-center space-x-5">
-                    <input
-                        type="text"
-                        placeholder="Search for anything..."
-                        className="px-3 py-2 hidden md:block text-sm border border-purple-600 rounded-md shadow-md focus:outline-none focus:ring-3 focus:ring-purple-400"
-                    />
+                    {mounted && (
+                        <input
+                            type="text"
+                            placeholder="Search for anything..."
+                            className="px-3 py-2 hidden md:block text-sm border border-purple-600 rounded-md shadow-md focus:outline-none focus:ring-3 focus:ring-purple-400"
+                        />
+                    )}
                     <div className="text-3xl"><IoNotifications /></div>
                 </div>
             </div>
@@ -89,33 +96,33 @@ export default function Dashboard() {
                             <button className="border px-3 py-1 rounded hover:text-purple-600">Add New User</button>
                         </div>
                         <div className="overflow-x-auto">
-                        <table className="w-full text-left text-md mt-3 border border-gray-200 rounded-lg">
-                            <thead className="bg-purple-100 text-purple-800 font-semibold">
-                                <tr>
-                                    <th className="px-4 py-3">User ID</th>
-                                    <th className="px-4 py-3">User Name</th>
-                                    <th className="px-4 py-3">Book Issued</th>
-                                    <th className="px-4 py-3">Department</th>
-                                    <th className="px-4 py-3 text-center">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody className="bg-white text-gray-700">
-                                {users.map((user, index) => (
-                                    <tr
-                                        key={index}
-                                        className="h-[60px] border-t hover:bg-purple-50 transition duration-150"
-                                    >
-                                        <td className="px-4 py-3">{user.id}</td>
-                                        <td className="px-4 py-3">{user.name}</td>
-                                        <td className="px-4 py-3">{user.books}</td>
-                                        <td className="px-4 py-3">{user.dept}</td>
-                                        <td className="px-4 py-3 text-center text-2xl text-purple-600">
-                                            <BsThreeDots />
-                                        </td>
+                            <table className="w-full text-left text-md mt-3 border border-gray-200 rounded-lg">
+                                <thead className="bg-purple-100 text-purple-800 font-semibold">
+                                    <tr>
+                                        <th className="px-4 py-3">User ID</th>
+                                        <th className="px-4 py-3">User Name</th>
+                                        <th className="px-4 py-3">Book Issued</th>
+                                        <th className="px-4 py-3">Department</th>
+                                        <th className="px-4 py-3 text-center">Action</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody className="bg-white text-gray-700">
+                                    {users.map((user, index) => (
+                                        <tr
+                                            key={index}
+                                            className="h-[60px] border-t hover:bg-purple-50 transition duration-150"
+                                        >
+                                            <td className="px-4 py-3">{user.id}</td>
+                                            <td className="px-4 py-3">{user.name}</td>
+                                            <td className="px-4 py-3">{user.books}</td>
+                                            <td className="px-4 py-3">{user.dept}</td>
+                                            <td className="px-4 py-3 text-center text-2xl text-purple-600">
+                                                <BsThreeDots />
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
                         </div>
 
                         <div className="text-purple-600 text-right mr-2 hover:underline">see more</div>
@@ -128,46 +135,46 @@ export default function Dashboard() {
                             <button className="border px-3 py-1 rounded hover:text-purple-600">Add New Book</button>
                         </div>
                         <div className="overflow-x-auto">
-                        <table className="w-full text-left text-sm mt-3 border border-gray-200 rounded-lg ">
-                            <thead className="bg-purple-100 text-purple-800 font-semibold">
-                                <tr>
-                                    <th className="px-4 py-3">Book ID</th>
-                                    <th className="px-4 py-3">Title</th>
-                                    <th className="px-4 py-3">Author</th>
-                                    <th className="px-4 py-3">Available</th>
-                                    <th className="px-4 py-3 text-center">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody className="bg-white text-gray-700">
-                                {books.map((book, index) => (
-                                    <tr
-                                        key={index}
-                                        className="h-[60px] border-t hover:bg-purple-50 transition duration-150"
-                                    >
-                                        <td className="px-4 py-3">{book.id}</td>
-                                        <td className="px-4 py-3">{book.title}</td>
-                                        <td className="px-4 py-3">{book.author}</td>
-                                        <td className="px-4 py-3">{book.available}</td>
-                                        <td className="px-4 py-3 text-center text-2xl text-purple-600">
-                                            <BsThreeDots />
-                                        </td>
+                            <table className="w-full text-left text-sm mt-3 border border-gray-200 rounded-lg ">
+                                <thead className="bg-purple-100 text-purple-800 font-semibold">
+                                    <tr>
+                                        <th className="px-4 py-3">Book ID</th>
+                                        <th className="px-4 py-3">Title</th>
+                                        <th className="px-4 py-3">Author</th>
+                                        <th className="px-4 py-3">Available</th>
+                                        <th className="px-4 py-3 text-center">Action</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody className="bg-white text-gray-700">
+                                    {books.map((book, index) => (
+                                        <tr
+                                            key={index}
+                                            className="h-[60px] border-t hover:bg-purple-50 transition duration-150"
+                                        >
+                                            <td className="px-4 py-3">{book.id}</td>
+                                            <td className="px-4 py-3">{book.title}</td>
+                                            <td className="px-4 py-3">{book.author}</td>
+                                            <td className="px-4 py-3">{book.available}</td>
+                                            <td className="px-4 py-3 text-center text-2xl text-purple-600">
+                                                <BsThreeDots />
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
                         </div>
 
                         <div className="text-purple-600 text-right mr-2  hover:underline">see more</div>
                     </div>
                 </div>
 
-                <TopBook/>
+                <TopBook />
 
-                <Overdue/>
+                <Overdue />
 
                 <div className="flex flex-col lg:flex-row gap-6 mt-4 ">
-                    
-                    <Latest_issue/>
+
+                    <Latest_issue />
                     <Chart />
                 </div>
 

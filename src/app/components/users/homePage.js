@@ -1,7 +1,15 @@
 "use client";
+import { useState, useEffect } from "react";
 import { IoNotifications } from "react-icons/io5";
 import Category from "./category";
 export default function Homepage() {
+    const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
     return (
         <>
             <main className="flex flex-col md:ml-2 p-2 md:p-6 w-full">
