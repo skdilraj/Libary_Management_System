@@ -25,10 +25,10 @@ export default function Category({onSelect}) {
         <div>
             <h2 className="text-2xl">Categories</h2>
 
-                <div className="flex flex-wrap md:justify-between my-3">
+                <div className="flex flex-wrap md:justify-between m-3">
                     {items.map((item, index) => (
 
-                        <div key={index} onClick={() => handleClick(item.label)}  className="flex flex-col cursor-pointer  p-5 my-2 md:my-0 w-full md:w-[25%]  bg-purple-400 justify-center rounded-lg" >
+                        <div key={index} onClick={() => handleClick(item.label)}  className="flex flex-col cursor-pointer  p-5 my-2 md:my-0 w-full md:w-[30%]  bg-purple-400 justify-center rounded-lg transform transition-transform duration-300 hover:scale-110" >
                             <div className="flex justify-between my-2">
                                  <div className="text-3xl w-[70px]"><img src="/books.png" alt="img"/></div>
                                 <p className="text-2xl mr-2">{item.label}</p>

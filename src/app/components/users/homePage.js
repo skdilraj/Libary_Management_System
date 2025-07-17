@@ -10,7 +10,7 @@ export default function Homepage() {
     setMounted(true);
   }, []);
 
-   const [selectedName, setSelectedName] = useState("");
+   const [selectedName, setSelectedName] = useState("All Books");
   if (!mounted) return null;
     return (
         <>
