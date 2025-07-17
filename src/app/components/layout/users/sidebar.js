@@ -39,7 +39,7 @@ export default function Sidebar() {
           )}
         </div>
 
-        <button onClick={toggleSidebar} className="bg-slate-200 p-2 rounded-sm mr-[-30px]">
+       <button onClick={toggleSidebar} className="bg-slate-200 p-2 rounded-sm mr-[-30px]">
           {isCollapsed ? <FaChevronRight /> : <FaChevronLeft />}
         </button>
       </div>
