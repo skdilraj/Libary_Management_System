@@ -12,19 +12,20 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+import Link from "next/link";
 const data = [
-  { name: "Jan",  Borrow_books: 24 },
-  { name: "Feb",  Borrow_books: 39 },
-  { name: "Mar",  Borrow_books: 15 },
-  { name: "Apr",  Borrow_books: 9 },
-  { name: "May",  Borrow_books: 34 },
-  { name: "Jun",  Borrow_books: 18 },
-  { name: "July",  Borrow_books: 20 },
-  { name: "Aug",  Borrow_books: 30 },
-  { name: "Sep",  Borrow_books: 11 },
-  { name: "Oct",  Borrow_books: 19 },
-  { name: "Nov",  Borrow_books: 6 },
-  { name: "Dec",  Borrow_books: 24 },
+  { name: "Jan", Borrow_books: 24 },
+  { name: "Feb", Borrow_books: 39 },
+  { name: "Mar", Borrow_books: 15 },
+  { name: "Apr", Borrow_books: 9 },
+  { name: "May", Borrow_books: 34 },
+  { name: "Jun", Borrow_books: 18 },
+  { name: "July", Borrow_books: 20 },
+  { name: "Aug", Borrow_books: 30 },
+  { name: "Sep", Borrow_books: 11 },
+  { name: "Oct", Borrow_books: 19 },
+  { name: "Nov", Borrow_books: 6 },
+  { name: "Dec", Borrow_books: 24 },
 ];
 
 export default function Profile() {
@@ -91,7 +92,7 @@ export default function Profile() {
                   <YAxis />
                   <Tooltip />
                   <Legend />
-                  
+
                   <Bar dataKey="Borrow_books" fill="#82ca9d" activeBar={<Rectangle fill="gold" stroke="purple" />} />
 
                 </BarChart>
@@ -112,16 +113,17 @@ export default function Profile() {
               <p>Fine Due</p>
               <p className="mt-2 font-bold">₹400</p>
             </div>
-            
-                 <div className="flex bg-slate-100 w-full h-[116px] rounded-lg text-center  m-4 justify-between items-center px-10">
-                    <p>Borrow Request</p>
-                    <img src=" /icon_borrow.png" alt="icon not found"/>
-               </div>
-            
+
+            <div className="flex bg-slate-100  h-[116px] rounded-lg text-center  m-4 justify-between items-center px-10 cursor-pointer hover:scale-105 transition-transform duration-300">
+              <p>Borrow Request</p>
+              <img src=" /icon_borrow.png" alt="icon not found" />
+            </div>
+
           </div>
 
           {/* Table */}
           <div className="w-full lg:w-1/2 bg-white rounded-lg p-4">
+            <h2 className="text-3xl">Borrow book list</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm border border-gray-200 rounded-lg">
                 <thead className="bg-purple-100 text-purple-800 font-semibold">
@@ -130,27 +132,28 @@ export default function Profile() {
                     <th className="px-4 py-3">Title</th>
                     <th className="px-4 py-3">Author</th>
                     <th className="px-4 py-3">Fine</th>
-                    <th className="px-4 py-3 text-center">Action</th>
+
                   </tr>
                 </thead>
                 <tbody className="bg-white text-gray-700">
                   {books.map((book, index) => (
                     <tr
                       key={index}
-                      className="h-[40px] border-t hover:bg-purple-50 transition duration-150"
+                      className="h-[50px] border-t hover:bg-purple-50 transition duration-150"
                     >
                       <td className="px-4 py-2">{book.BookId}</td>
                       <td className="px-4 py-2">{book.Title}</td>
                       <td className="px-4 py-2">{book.Author}</td>
                       <td className="px-4 py-2">₹{book.Fine}</td>
-                      <td className="px-4 py-2 text-center text-2xl text-purple-600">
-                        <BsThreeDots />
-                      </td>
+
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
+            <Link href="/users/borrow" className="text-purple-600 text-right mr-2  hover:underline">
+              see more
+            </Link>
           </div>
         </div>
       </div>
