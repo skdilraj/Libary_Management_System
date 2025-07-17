@@ -1,3 +1,13 @@
+
+
+export default function SideBar() {
+  return (
+    <aside>
+        
+    </aside>
+  );
+}
+
 "use client";
 import { useState } from "react";
 import Link from "next/link";
