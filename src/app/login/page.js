@@ -1,14 +1,14 @@
 import Image from "next/image";
-
+import Link from "next/link";
 export default function Login() {
   return (
     <main className="bg-slate-300 min-h-screen flex flex-col md:flex-row justify-center items-center p-6">
-      
+
       {/* Left Image Section */}
       <div className="hidden md:flex justify-center md:mr-[80px]  lg:mr-[100px]">
         {/* Either use <img> or <Image> — here's the <img> version: */}
-        <img 
-          src="/login.png" 
+        <img
+          src="/login.png"
           alt="Login Illustration"
           className="w-[300px] sm:w-[400px] md:w-[500px] lg:w-[600px] xl:w-[700px] h-auto max-h-[90vh] object-contain"
         />
@@ -47,12 +47,14 @@ export default function Login() {
             </span>
           </div>
 
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"
-          >
-            Sign In
-          </button>
+          <Link href="/users/home">
+            <button
+              type="submit"
+              className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"
+            >
+              Sign In
+            </button>
+          </Link>
         </div>
       </form>
     </main>
