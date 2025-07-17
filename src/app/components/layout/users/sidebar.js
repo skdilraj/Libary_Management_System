@@ -2,15 +2,11 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  FaHome,
-  FaUsers,
-  FaExchangeAlt,
-  FaChartBar,
-  FaChevronLeft,
-  FaChevronRight,
-} from "react-icons/fa";
+import { FaHome, FaUser, FaSignOutAlt, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { IoBookSharp } from "react-icons/io5";
+import { MdAssignmentReturn } from "react-icons/md";
+import { BsBookHalf } from "react-icons/bs";
+
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -19,12 +15,12 @@ export default function Sidebar() {
   const toggleSidebar = () => setIsCollapsed((prev) => !prev);
 
   const navItems = [
-    { label: "Home", route: "/", icon: <FaHome /> },
-    { label: "Books", route: "/orders", icon: <IoBookSharp /> },
-    { label: "Members", route: "/docs", icon: <FaUsers /> },
-    { label: "Issue-Return", route: "/map", icon: <FaExchangeAlt /> },
-    { label: "Reports", route: "/stats", icon: <FaChartBar /> },
-  ];
+  { label: "Home", route: "/components/users/home", icon: <FaHome /> },
+  { label: "Books", route: "/books", icon: <BsBookHalf /> },
+  { label: "Profile", route: "/profile", icon: <FaUser /> },
+  { label: "Issue", route: "/issue", icon: <MdAssignmentReturn /> },
+  { label: "Logout", route: "/logout", icon: <FaSignOutAlt /> },
+];
 
   return (
     <div
