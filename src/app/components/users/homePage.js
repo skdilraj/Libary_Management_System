@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { IoNotifications } from "react-icons/io5";
 import Category from "./category";
+import CategoryBook from "./category_book";
 export default function Homepage() {
     const [mounted, setMounted] = useState(false);
 
@@ -9,6 +10,7 @@ export default function Homepage() {
     setMounted(true);
   }, []);
 
+   const [selectedName, setSelectedName] = useState("");
   if (!mounted) return null;
     return (
         <>
@@ -44,7 +46,8 @@ export default function Homepage() {
                     </div>
                 </div>
                 <section className=" flex flex-col mt-6 bg-slate-100 rounded-sm p-4">
-                    <Category />
+                    <Category  onSelect={setSelectedName}/>
+                    <CategoryBook CategoryName={selectedName} />
                 </section>
 
             </main>
