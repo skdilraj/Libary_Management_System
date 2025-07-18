@@ -14,8 +14,8 @@ import {
 
 const navItems = [
   { label: "Home", route: "/users/home", icon: <FaHome /> },
-  { label: "Book Issue", route: "/users/profile", icon: < FaBook /> },
-  { label: "Book Return", route: "/issue", icon: <FaUndoAlt /> },
+  { label: "Books Issue", route: "", icon: < FaBook /> },
+  { label: "Book Return", route: "/libarian/return_book", icon: <FaUndoAlt /> },
   { label: "Logout", route: "/logout", icon: <FaSignOutAlt /> },
 ];
 
