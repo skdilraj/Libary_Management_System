@@ -102,7 +102,7 @@ export default function Bookreturn() {
                                         <form>
                                             <button
                                                 type="submit"
-                                                className="bg-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded"
+                                                className="bg-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-1 px-2 border border-green-500 hover:border-transparent rounded"
                                             >
                                                 Return
                                             </button>
@@ -113,7 +113,7 @@ export default function Bookreturn() {
                         </tbody>
                     </table>
                 </div>
-                 <Pagination totalPages={10} visiblePages={5} />
+                 <Pagination totalPages={10} visiblePages={3} />
             </section>
         </main>
     );

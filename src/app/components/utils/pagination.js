@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { FaSync } from "react-icons/fa";
 
-export default function Pagination() {
-  const totalPages = 10;
-  const [currentPage, setCurrentPage] = useState(6);
+export default function Pagination({ totalPages = 10, visiblePages = 5 }) {
+  const [currentPage, setCurrentPage] = useState(1);
 
   const goToPage = (page) => {
     if (page >= 1 && page <= totalPages) {
@@ -13,59 +12,67 @@ export default function Pagination() {
 
   const generatePageNumbers = () => {
     const pages = [];
-    if (totalPages <= 7) {
+
+    if (totalPages <= visiblePages) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
       }
     } else {
-      if (currentPage <= 4) {
-        pages.push(1, 2, 3, 4, 5, "...", totalPages);
-      } else if (currentPage >= totalPages - 3) {
-        pages.push(1, "...", totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
-      } else {
-        pages.push(
-          1,
-          "...",
-          currentPage - 1,
-          currentPage,
-          currentPage + 1,
-          "...",
-          totalPages
-        );
+      const sideCount = Math.floor((visiblePages - 1) / 2);
+      let start = Math.max(2, currentPage - sideCount);
+      let end = Math.min(totalPages - 1, currentPage + sideCount);
+
+      if (currentPage <= sideCount + 1) {
+        start = 2;
+        end = visiblePages - 1;
       }
+
+      if (currentPage >= totalPages - sideCount) {
+        start = totalPages - visiblePages + 2;
+        end = totalPages - 1;
+      }
+
+      pages.push(1);
+      if (start > 2) pages.push("...");
+      for (let i = start; i <= end; i++) pages.push(i);
+      if (end < totalPages - 1) pages.push("...");
+      pages.push(totalPages);
     }
 
-    // Ensure no duplicate numbers
-    return [...new Set(pages)];
+    return pages;
   };
 
   return (
-    <div className="flex justify-center py-4">
-      <div className="flex items-center border rounded overflow-hidden shadow">
+    <div className="flex justify-center py-4 w-full px-2">
+      <div className="flex flex-wrap items-center border rounded overflow-x-auto max-w-full shadow text-sm sm:text-base">
+        {/* Prev */}
         <button
           onClick={() => goToPage(currentPage - 1)}
-          className="px-3 py-2 border-r hover:bg-gray-100"
+          className="min-w-[40px] px-2 sm:px-3 py-2 border-r hover:bg-gray-100 disabled:text-gray-400"
           disabled={currentPage === 1}
         >
           Prev
         </button>
+
+        {/* Refresh */}
         <button
           onClick={() => goToPage(currentPage)}
-          className="px-3 py-2 border-r hover:bg-gray-100"
+          className="min-w-[40px] px-2 sm:px-3 py-2 border-r hover:bg-gray-100"
         >
           <FaSync />
         </button>
 
+        {/* Page Numbers */}
         {generatePageNumbers().map((item, idx) => (
           <button
             key={idx}
             disabled={item === "..."}
             onClick={() => typeof item === "number" && goToPage(item)}
-            className={`px-3 py-2 border-r font-semibold ${
+            className={`min-w-[40px] px-2 sm:px-3 py-2 border-r font-semibold ${
               item === currentPage
                 ? "bg-purple-700 text-white"
                 : item === "..."
-                ? "cursor-default"
+                ? "cursor-default text-gray-400"
                 : "hover:bg-gray-100"
             }`}
           >
@@ -73,9 +80,10 @@ export default function Pagination() {
           </button>
         ))}
 
+        {/* Next */}
         <button
           onClick={() => goToPage(currentPage + 1)}
-          className="px-3 py-2 hover:bg-gray-100"
+          className="min-w-[40px] px-2 sm:px-3 py-2 hover:bg-gray-100 disabled:text-gray-400"
           disabled={currentPage === totalPages}
         >
           Next

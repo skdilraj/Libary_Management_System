@@ -13,7 +13,7 @@ import {
 } from "react-icons/fa";
 
 const navItems = [
-  { label: "Home", route: "/users/home", icon: <FaHome /> },
+  { label: "Home", route: "/libarian", icon: <FaHome /> },
   { label: "Books Issue", route: "", icon: < FaBook /> },
   { label: "Book Return", route: "/libarian/return_book", icon: <FaUndoAlt /> },
   { label: "Logout", route: "/logout", icon: <FaSignOutAlt /> },
