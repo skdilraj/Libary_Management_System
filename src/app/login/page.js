@@ -1,43 +1,56 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
+
 export default function Login() {
   return (
-    <main className="bg-slate-300 min-h-screen flex flex-col md:flex-row justify-center items-center p-6">
-
-      {/* Left Image Section */}
-      <div className="hidden md:flex justify-center md:mr-[80px]  lg:mr-[100px]">
-        {/* Either use <img> or <Image> — here's the <img> version: */}
+    <main className="bg-white min-h-screen relative flex items-center justify-center px-6 py-12 overflow-hidden">
+      {/* Background Image */}
+      <div className="hidden md:flex absolute inset-0 w-screen h-full justify-center z-0">
         <img
-          src="/login.png"
+          src="/assets.png"
           alt="Login Illustration"
-          className="w-[300px] sm:w-[400px] md:w-[500px] lg:w-[600px] xl:w-[700px] h-auto max-h-[90vh] object-contain"
+          className="w-screen h-[100%] object-contain
+           opacity-90"
         />
       </div>
 
       {/* Login Form */}
-      <form className="w-full max-w-sm bg-blue-50 p-8 rounded-xl shadow-xl md:mr-[100px] mt-10 md:mt-0">
-        <div>
-          <p className="text-2xl mb-1">Welcome</p>
-          <span className="text-base text-neutral-800">to </span>
-          <span className="text-4xl text-purple-600 font-semibold">Library</span>
+      <div
+        className="
+          relative z-10 
+          w-full max-w-md 
+          bg-purple-50 p-8 rounded-xl shadow-2xl 
+          md:absolute lg:right-[19%] 
+          
+          mt-10 md:mt-0
+        "
+      >
+        <div className="mb-6 text-center">
+          <p className="text-2xl font-semibold">Welcome</p>
+          <p className="text-base text-neutral-800">
+            to <span className="text-4xl text-purple-600 font-bold">Library</span>
+          </p>
         </div>
 
-        <div className="mt-6 space-y-4">
+        <form className="space-y-5">
           <div>
-            <label className="block mb-1">Email Id</label>
+            <label className="block mb-1 text-sm font-medium">Email Id</label>
             <input
-              type="text"
-              placeholder="Enter email id.."
-              className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              type="email"
+              placeholder="Enter email id..."
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
+              required
             />
           </div>
 
           <div>
-            <label className="block mb-1">Password</label>
+            <label className="block mb-1 text-sm font-medium">Password</label>
             <input
               type="password"
-              placeholder="Enter password.."
-              className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter password..."
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
+              required
             />
           </div>
 
@@ -50,13 +63,13 @@ export default function Login() {
           <Link href="/users/home">
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"
+              className="w-full py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200"
             >
               Sign In
             </button>
           </Link>
-        </div>
-      </form>
+        </form>
+      </div>
     </main>
   );
 }
