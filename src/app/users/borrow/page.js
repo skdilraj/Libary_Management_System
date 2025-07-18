@@ -27,7 +27,7 @@ export default function Home ()  {
   ];
 
   return (
-    <div className="flex min-h-screen font-[Inter] bg-slate-100">
+    <div className="flex flex-col md:flex-row min-h-screen font-[Inter] bg-slate-100">
       {/* Sidebar */}
       <Sidebar/>
 
