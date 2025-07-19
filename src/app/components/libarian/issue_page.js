@@ -1,5 +1,4 @@
 'use client';
-
 import { BsThreeDots } from "react-icons/bs";
 import { IoIosPeople } from "react-icons/io";
 import React from "react";
@@ -17,13 +16,13 @@ import Link from "next/link";
 
 // Chart data: 4 weeks
 const data = [
-  { name: "Week 1", Borrow_books: 8 },
-  { name: "Week 2", Borrow_books: 15 },
-  { name: "Week 3", Borrow_books: 12 },
-  { name: "Week 4", Borrow_books: 18 },
+  { name: "Week 1", Borrow_books: 25 },
+  { name: "Week 2", Borrow_books: 20 },
+  { name: "Week 3", Borrow_books: 31 },
+  { name: "Week 4", Borrow_books: 19 },
 ];
 
-export default function Libarian_Home() {
+export default function Issue() {
   const users = [
   {
     UserId: 1,
@@ -75,7 +74,7 @@ export default function Libarian_Home() {
 
   return (
     <main className="p-4 md:p-6 w-full">
-      <h2 className="text-2xl md:text-3xl font-semibold mb-4">Check Issue</h2>
+      <h2 className="text-2xl md:text-3xl font-semibold mb-4 text-purple-600">Book Issue</h2>
 
       <div className="bg-slate-100 p-4 md:p-6 rounded-sm w-full">
         {/* Top Cards Section */}
@@ -126,7 +125,7 @@ export default function Libarian_Home() {
             <thead className="bg-purple-100 text-purple-800 font-semibold">
               <tr>
                 <th className="px-4 py-3">User ID</th>
-                <th className="px-4 py-3">Name</th>
+                <th className="px-4 py-3">User Name</th>
                 <th className="px-4 py-3">Book ID</th>
                 <th className="px-4 py-3">Book Name</th>
                 <th className="px-4 py-3">Author</th>
