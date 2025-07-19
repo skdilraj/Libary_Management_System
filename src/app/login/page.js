@@ -1,6 +1,41 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+export default function Login() {
+  const [formData, setFormData] = useState({});
+  let router = useRouter(); // for redirecting....use push() method
+
+  function handleInput(e) {
+    let { name, value } = e.target;
+    // console.log(name,value);
+    setFormData((prev) => {
+      return { ...prev, [name]: value };
+    });
+  }
+  
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      let response = await fetch("http://localhost:8000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      // console.log(response);
+      if (!response.ok) {
+        alert("Wrong Credentials");
+      } else {
+        // alert ("success");
+        router.push("/users/profile");
+      }
+    } catch (err) {
+      alert("Internal Server Error !");
+      console.error(err);
+    }
+  }
+}
 
 export default function Login() {
   return (
@@ -59,15 +94,12 @@ export default function Login() {
               Forgot password?
             </span>
           </div>
-
-          <Link href="/users/home">
             <button
               type="submit"
               className="w-full py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200"
             >
               Sign In
             </button>
-          </Link>
         </form>
       </div>
     </main>
