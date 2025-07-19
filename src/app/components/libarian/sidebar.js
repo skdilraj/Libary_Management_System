@@ -14,9 +14,9 @@ import {
 
 const navItems = [
   { label: "Home", route: "/libarian", icon: <FaHome /> },
-  { label: "Books Issue", route: "", icon: < FaBook /> },
-  { label: "Book Return", route: "/libarian/return_book", icon: <FaUndoAlt /> },
-  { label: "Logout", route: "/logout", icon: <FaSignOutAlt /> },
+  { label: "Books Issue", route: "/libarian/issue", icon: < FaBook /> },
+  { label: "Book Return", route: "/libarian/return", icon: <FaUndoAlt /> },
+  { label: "Logout", route: "/login", icon: <FaSignOutAlt /> },
 ];
 
 export default function Sidebar() {

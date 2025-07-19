@@ -27,7 +27,7 @@ export default function Sidebar() {
 
   const navItems = [
     { label: "Home", route: "/admins", icon: <FaHome /> },
-    { label: "Books", route: "", icon: <IoBookSharp /> },
+    { label: "Books", route: "/admins/books", icon: <IoBookSharp /> },
     { label: "Members", route: "/admins/members", icon: <FaUsers /> },
     { label: "Issue-Return", route: "/map", icon: <FaExchangeAlt /> },
     { label: "Reports", route: "/stats", icon: <FaChartBar /> },

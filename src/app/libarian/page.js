@@ -1,11 +1,10 @@
-
-import Sidebar from "../components/libarian/sidebar"
-import Libarian_Home from "../components/libarian/home_page"
-export default function Home() {
-    return (
-        <main className="flex flex-col md:flex-row">
-           <Sidebar/> 
-           <Libarian_Home/>
+import Sidebar from "../components/libarian/sidebar";
+import Home from "../components/libarian/home";
+export default function Librarian(){
+    return(
+        <main className="flex">
+            <Sidebar/>
+            <Home/>
         </main>
-    )
+    );
 }
