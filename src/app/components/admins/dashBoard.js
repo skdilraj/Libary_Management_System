@@ -94,7 +94,7 @@ export default function Dashboard() {
                     <div className="w-full lg:w-1/2 bg-white shadow-md rounded-lg p-4 ">
                         <div className="flex justify-between items-center mb-4">
                             <h2 className="text-xl font-semibold">Latest Users List</h2>
-                            <button className="border px-3 py-1 rounded hover:text-purple-600">Add New User</button>
+                           <Link href="/admins/add-student" className="border px-3 py-1 rounded hover:text-purple-600">Add New student</Link>
                         </div>
                         <div className="overflow-x-auto">
                             <table className="w-full text-left text-md mt-3 border border-gray-200 rounded-lg">

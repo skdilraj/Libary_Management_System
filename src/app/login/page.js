@@ -37,7 +37,7 @@ export default function Login() {
             router.push("/users/home");
             break;
           case "admin":
-            router.push("/admin/");
+            router.push("/admins/");
             break;
           case "librarian":
             router.push("/librarian/");
