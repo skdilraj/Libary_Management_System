@@ -1,6 +1,6 @@
 'use client';
 import { BsThreeDots } from "react-icons/bs";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   BarChart,
   Bar,
@@ -59,6 +59,23 @@ export default function Profile() {
       Fine: 0,
     },
   ];
+  const [profile,setProfile]=useState({});
+  useEffect(()=>{
+    async function fetchData() {
+      try{
+      const profileRes= await fetch("http://localhost:8000/api/student/profile", {
+       method: "GET",
+      credentials: "include",   // IMPORTANT: include cookies in request
+      });
+      const profileJson=await profileRes.json();
+      console.log(profileJson)
+      setProfile(profileJson)
+      }catch(error){
+        console.error("Error fetching data:", error);
+      }
+    }
+    fetchData();
+  },[]);
 
   return (
     <main className="p-4 md:p-6 w-full">
@@ -69,16 +86,18 @@ export default function Profile() {
         <div className="flex flex-col lg:flex-row gap-4 w-full">
           {/* Profile */}
           <div className="w-full lg:w-1/2 bg-white rounded-lg flex items-center p-4 min-h-[300px]">
-            <div className="bg-slate-100 w-[100px] md:w-[150px] h-[100px] md:h-[150px] rounded-full shadow-sm mr-4"></div>
+            <div className="">
+              <img src={profile.img} className="bg-slate-100  shadow-sm mr-4 w-[100px] md:w-[150px] h-[100px] md:h-[150px] object-fill rounded-full"/>
+            </div>
             <div>
               <p className="text-base md:text-lg mb-2">
-                <span className="font-semibold pr-2">Name:</span> Surjendu Nandi
+                <span className="font-semibold pr-2">Name:</span> {profile.name}
               </p>
               <p className="text-base md:text-lg mb-2">
-                <span className="font-semibold pr-2">Id:</span> MCA2024059
+                <span className="font-semibold pr-2">Roll:</span> {profile.roll}
               </p>
               <p className="text-base md:text-lg">
-                <span className="font-semibold pr-2">Email:</span> rcciitstudent12345@gmail.com
+                <span className="font-semibold pr-2">Email:</span> {profile.email}
               </p>
             </div>
           </div>
