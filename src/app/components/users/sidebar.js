@@ -1,22 +1,19 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation"; // ✅ import router
 import { FaHome, FaUser, FaSignOutAlt, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { IoBookSharp } from "react-icons/io5";
 import { MdAssignmentReturn } from "react-icons/md";
 import { BsBookHalf } from "react-icons/bs";
 import { HiOutlineMenu, HiX } from "react-icons/hi";
 
-
 export default function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter(); // ✅ initialize router
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [mounted, setMounted] = useState(false); // <== key fix
-
+  const [mounted, setMounted] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
-
 
   useEffect(() => {
     setMounted(true);
@@ -24,20 +21,38 @@ export default function Sidebar() {
 
   const toggleSidebar = () => setIsCollapsed((prev) => !prev);
 
+  // ✅ Logout action
+  const handleLogout = async () => {
+    try {
+      await fetch("http://localhost:8000/api/auth/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+
+      localStorage.clear();
+      sessionStorage.clear();
+
+      router.replace("/login"); // ✅ now works
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
+  };
+
   const navItems = [
     { label: "Home", route: "/users/home", icon: <FaHome /> },
     { label: "Borrow Books", route: "/users/borrow", icon: <BsBookHalf /> },
     { label: "Profile", route: "/users/profile", icon: <FaUser /> },
     { label: "Issue", route: "/issue", icon: <MdAssignmentReturn /> },
-    { label: "Logout", route: "/logout", icon: <FaSignOutAlt /> },
+    { label: "Logout", action: handleLogout, icon: <FaSignOutAlt /> }, // 🔹 action instead of route
   ];
 
   return (
     <>
       {/* Sidebar for md and above */}
       <div
-        className={`${isCollapsed ? "w-20" : "w-60"
-          } sticky top-0 hidden md:flex h-screen bg-white shadow-md flex-col px-4 py-6 space-y-6 transition-all duration-300`}
+        className={`${
+          isCollapsed ? "w-20" : "w-60"
+        } sticky top-0 hidden md:flex h-screen bg-white shadow-md flex-col px-4 py-6 space-y-6 transition-all duration-300`}
       >
         {/* Logo Section */}
         <div className="flex items-center justify-between">
@@ -66,19 +81,33 @@ export default function Sidebar() {
             <div className="text-xs text-gray-400 uppercase">Sidebar</div>
           )}
 
-          {navItems.map((item) => (
-            <Link key={item.label} href={item.route} passHref>
+          {navItems.map((item) =>
+            item.action ? (
+              // Logout (action)
               <div
-                className={`flex h-[50px] my-2 items-center space-x-3 text-gray-700 hover:text-purple-600 cursor-pointer px-3 py-1 rounded hover:bg-purple-50 transition ${pathname === item.route
-                    ? "bg-purple-50 text-purple-600 font-medium"
-                    : ""
-                  }`}
+                key={item.label}
+                onClick={item.action}
+                className="flex h-[50px] my-2 items-center space-x-3 text-gray-700 hover:text-red-600 cursor-pointer px-3 py-1 rounded hover:bg-red-50 transition"
               >
                 <div className="text-2xl">{item.icon}</div>
                 {!isCollapsed && <span className="text-md">{item.label}</span>}
               </div>
-            </Link>
-          ))}
+            ) : (
+              // Normal navigation
+              <Link key={item.label} href={item.route} passHref>
+                <div
+                  className={`flex h-[50px] my-2 items-center space-x-3 text-gray-700 hover:text-purple-600 cursor-pointer px-3 py-1 rounded hover:bg-purple-50 transition ${
+                    pathname === item.route
+                      ? "bg-purple-50 text-purple-600 font-medium"
+                      : ""
+                  }`}
+                >
+                  <div className="text-2xl">{item.icon}</div>
+                  {!isCollapsed && <span className="text-md">{item.label}</span>}
+                </div>
+              </Link>
+            )
+          )}
         </div>
       </div>
 
@@ -94,7 +123,10 @@ export default function Sidebar() {
           </div>
 
           {/* Menu Toggle Button */}
-          <button onClick={() => setMenuOpen(!menuOpen)} className="text-3xl text-purple-600">
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="text-3xl text-purple-600"
+          >
             {menuOpen ? <HiX /> : <HiOutlineMenu />}
           </button>
         </div>
@@ -102,17 +134,40 @@ export default function Sidebar() {
         {/* Dropdown Menu */}
         {menuOpen && (
           <div className="mt-3 bg-white shadow-md rounded-lg py-2 space-y-1 transition-all duration-300">
-            {navItems.map((item) => (
-              <Link key={item.label} href={item.route}>
+            {navItems.map((item) =>
+              item.action ? (
+                // Logout (action)
                 <div
-                  className={`flex items-center space-x-2 px-4 py-2 text-gray-700 hover:text-purple-600 hover:bg-purple-50 ${pathname === item.route ? "text-purple-600 font-semibold bg-purple-50" : ""
-                    }`}
+                  key={item.label}
+                  onClick={() => {
+                    setMenuOpen(false);
+                    item.action();
+                  }}
+                  className="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:text-red-600 hover:bg-red-50 cursor-pointer"
                 >
                   <div className="text-xl">{item.icon}</div>
                   <span className="text-sm">{item.label}</span>
                 </div>
-              </Link>
-            ))}
+              ) : (
+                // Normal navigation
+                <Link
+                  key={item.label}
+                  href={item.route}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <div
+                    className={`flex items-center space-x-2 px-4 py-2 text-gray-700 hover:text-purple-600 hover:bg-purple-50 ${
+                      pathname === item.route
+                        ? "text-purple-600 font-semibold bg-purple-50"
+                        : ""
+                    }`}
+                  >
+                    <div className="text-xl">{item.icon}</div>
+                    <span className="text-sm">{item.label}</span>
+                  </div>
+                </Link>
+              )
+            )}
           </div>
         )}
       </div>

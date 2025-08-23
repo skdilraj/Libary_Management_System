@@ -1,5 +1,5 @@
 "use client";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { HiOutlineMenu, HiX } from "react-icons/hi";
@@ -17,13 +17,38 @@ import { IoBookSharp } from "react-icons/io5";
 export default function Sidebar() {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [mounted, setMounted] = useState(false); // <== key fix
+  const [mounted, setMounted] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+
   useEffect(() => {
     setMounted(true);
   }, []);
 
   const toggleSidebar = () => setIsCollapsed((prev) => !prev);
+
+  const handleLogout = async () => {
+    if (!confirm("Are you sure you want to logout?")) return;
+
+    try {
+      const response = await fetch("http://localhost:8000/api/auth/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log(data.message);
+        window.location.href = "/login";
+      } else {
+        console.error(data.error);
+        alert(data.error);
+      }
+    } catch (err) {
+      console.error("Logout failed:", err);
+      alert("Logout failed. Try again.");
+    }
+  };
 
   const navItems = [
     { label: "Home", route: "/admins", icon: <FaHome /> },
@@ -31,59 +56,67 @@ export default function Sidebar() {
     { label: "Members", route: "/admins/members", icon: <FaUsers /> },
     { label: "Issue-Return", route: "/map", icon: <FaExchangeAlt /> },
     { label: "Reports", route: "/stats", icon: <FaChartBar /> },
-    { label: "Logout", route: "/logout", icon: <FaSignOutAlt /> },
+    { label: "Logout", action: handleLogout, icon: <FaSignOutAlt /> },
   ];
 
   return (
     <>
-    <div
-      className={`${
-        isCollapsed ? "w-20" : "w-60"
-      } sticky top-0 hidden h-screen bg-white shadow-md md:flex md:flex-col px-4 py-6 space-y-6 transition-all duration-300`}
-    >
-      {/* Logo */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <div className="text-3xl text-purple-600">
-            <IoBookSharp />
+      {/* Desktop Sidebar */}
+      <div
+        className={`${isCollapsed ? "w-20" : "w-60"} sticky top-0 hidden h-screen bg-white shadow-md md:flex md:flex-col px-4 py-6 space-y-6 transition-all duration-300`}
+      >
+        {/* Logo */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <div className="text-3xl text-purple-600">
+              <IoBookSharp />
+            </div>
+            {!isCollapsed && (
+              <span className="text-lg font-bold text-purple-600">Liby</span>
+            )}
           </div>
-          {!isCollapsed && (
-            <span className="text-lg font-bold text-purple-600">Liby</span>
+
+          {mounted && (
+            <button
+              onClick={toggleSidebar}
+              className="bg-slate-200 p-2 rounded-sm mr-[-30px]"
+            >
+              {isCollapsed ? <FaChevronRight /> : <FaChevronLeft />}
+            </button>
           )}
         </div>
 
-        {mounted && (
-          <button
-            onClick={toggleSidebar}
-            className="bg-slate-200 p-2 rounded-sm mr-[-30px]">
-            {isCollapsed ? <FaChevronRight /> : <FaChevronLeft />}
-          </button>
-        )}
+        {/* Navigation Items */}
+        <div className="space-y-1">
+          {!isCollapsed && (
+            <div className="text-xs text-gray-400 uppercase">Sidebar</div>
+          )}
+
+          {navItems.map((item) =>
+            item.action ? (
+              <div
+                key={item.label}
+                onClick={item.action}
+                className={`flex h-[50px] my-2 items-center space-x-3 text-gray-700 hover:text-purple-600 cursor-pointer px-3 py-1 rounded hover:bg-purple-50 transition`}
+              >
+                <div className="text-2xl">{item.icon}</div>
+                {!isCollapsed && <span className="text-md">{item.label}</span>}
+              </div>
+            ) : (
+              <Link key={item.label} href={item.route} passHref>
+                <div
+                  className={`flex h-[50px] my-2 items-center space-x-3 text-gray-700 hover:text-purple-600 cursor-pointer px-3 py-1 rounded hover:bg-purple-50 transition ${pathname === item.route ? "bg-purple-50 text-purple-600 font-medium" : ""}`}
+                >
+                  <div className="text-2xl">{item.icon}</div>
+                  {!isCollapsed && <span className="text-md">{item.label}</span>}
+                </div>
+              </Link>
+            )
+          )}
+        </div>
       </div>
 
-      {/* Main Navigation */}
-      <div className="space-y-1">
-        {!isCollapsed && (
-          <div className="text-xs text-gray-400 uppercase">Sidebar</div>
-        )}
-
-        {navItems.map((item) => (
-          <Link key={item.label} href={item.route} passHref>
-            <div
-              className={`flex h-[50px] my-2 items-center space-x-3 text-gray-700 hover:text-purple-600 cursor-pointer px-3 py-1 rounded hover:bg-purple-50 transition ${
-                pathname === item.route
-                  ? "bg-purple-50 text-purple-600 font-medium"
-                  : ""
-              }`}
-            >
-              <div className="text-2xl">{item.icon}</div>
-              {!isCollapsed && <span className="text-md">{item.label}</span>}
-            </div>
-          </Link>
-        ))}
-      </div>
-    </div>
-    {/* Header menu for small screens */}
+      {/* Mobile Header */}
       <div className="md:hidden bg-white shadow px-4 py-2 sticky top-0 z-50">
         <div className="flex justify-between items-center">
           {/* Logo */}
@@ -94,8 +127,11 @@ export default function Sidebar() {
             <span className="text-lg font-bold text-purple-600">Liby</span>
           </div>
 
-          {/* Menu Toggle Button */}
-          <button onClick={() => setMenuOpen(!menuOpen)} className="text-3xl text-purple-600">
+          {/* Menu Toggle */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="text-3xl text-purple-600"
+          >
             {menuOpen ? <HiX /> : <HiOutlineMenu />}
           </button>
         </div>
@@ -103,17 +139,27 @@ export default function Sidebar() {
         {/* Dropdown Menu */}
         {menuOpen && (
           <div className="mt-3 bg-white shadow-md rounded-lg py-2 space-y-1 transition-all duration-300">
-            {navItems.map((item) => (
-              <Link key={item.label} href={item.route}>
+            {navItems.map((item) =>
+              item.action ? (
                 <div
-                  className={`flex items-center space-x-2 px-4 py-2 text-gray-700 hover:text-purple-600 hover:bg-purple-50 ${pathname === item.route ? "text-purple-600 font-semibold bg-purple-50" : ""
-                    }`}
+                  key={item.label}
+                  onClick={item.action}
+                  className={`flex items-center space-x-2 px-4 py-2 text-gray-700 hover:text-purple-600 hover:bg-purple-50`}
                 >
                   <div className="text-xl">{item.icon}</div>
                   <span className="text-sm">{item.label}</span>
                 </div>
-              </Link>
-            ))}
+              ) : (
+                <Link key={item.label} href={item.route}>
+                  <div
+                    className={`flex items-center space-x-2 px-4 py-2 text-gray-700 hover:text-purple-600 hover:bg-purple-50 ${pathname === item.route ? "text-purple-600 font-semibold bg-purple-50" : ""}`}
+                  >
+                    <div className="text-xl">{item.icon}</div>
+                    <span className="text-sm">{item.label}</span>
+                  </div>
+                </Link>
+              )
+            )}
           </div>
         )}
       </div>

@@ -4,6 +4,30 @@ import { useState, useRef } from "react";
 import { FaUpload } from "react-icons/fa";
 
 export default function AddBooks() {
+  const resourceTypeOptions = [
+  "Book",
+  "E-Book",
+  "Journal",
+  "Magazine",
+  "Newspaper",
+  "Thesis",
+  "Reference",
+  "Audio-Visual"
+];
+
+const categoryOptions = [
+  "Science",
+  "Technology",
+  "Arts",
+  "Literature",
+  "History",
+  "Geography",
+  "Philosophy",
+  "Religion",
+  "Social Science",
+  "Language"
+];
+
   // ------------------------------
   // State & Refs for Form
   // ------------------------------
@@ -185,8 +209,33 @@ export default function AddBooks() {
           {/* Book Details Form */}
           <form onSubmit={handleSubmit} onReset={handleReset} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <input name="resourceType" value={formData.resourceType} onChange={handleChange} placeholder="Resource Type" required className="border p-3 rounded-md outline-purple-400" />
-              <input name="category" value={formData.category} onChange={handleChange} placeholder="Category" required className="border p-3 rounded-md outline-purple-400" />
+               {/* Resource Type Dropdown */}
+  <select
+    name="resourceType"
+    value={formData.resourceType}
+    onChange={handleChange}
+    required
+    className="border p-3 rounded-md outline-purple-400"
+  >
+    <option value="" disabled>Select Resource Type</option>
+    {resourceTypeOptions.map((type) => (
+      <option key={type} value={type}>{type}</option>
+    ))}
+  </select>
+
+  {/* Category Dropdown */}
+  <select
+    name="category"
+    value={formData.category}
+    onChange={handleChange}
+    required
+    className="border p-3 rounded-md outline-purple-400"
+  >
+    <option value="" disabled>Select Category</option>
+    {categoryOptions.map((cat) => (
+      <option key={cat} value={cat}>{cat}</option>
+    ))}
+  </select>
               <input name="title" value={formData.title} onChange={handleChange} placeholder="Title" required className="border p-3 rounded-md outline-purple-400" />
               <input name="author" value={formData.author} onChange={handleChange} placeholder="Author" required className="border p-3 rounded-md outline-purple-400" />
               <input name="isbn" value={formData.isbn} onChange={handleChange} placeholder="ISBN" required className="border p-3 rounded-md outline-purple-400" />

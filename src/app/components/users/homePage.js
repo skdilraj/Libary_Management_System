@@ -6,12 +6,12 @@ import CategoryBook from "./category_book";
 export default function Homepage() {
     const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
-   const [selectedName, setSelectedName] = useState("All Books");
-  if (!mounted) return null;
+    const [selectedName, setSelectedName] = useState("All Books");
+    if (!mounted) return null;
     return (
         <>
             <main className="flex flex-col md:ml-2 p-2 md:p-6 w-full">
@@ -23,16 +23,18 @@ export default function Homepage() {
                         <option value="" disabled className="text-gray-400">
                             All Books
                         </option>
-                        <option value="option1" className="py-2">
-                            Option One
-                        </option>
-                        <option value="option2" className="py-2">
-                            Option Two
-                        </option>
-                        <option value="option3" className="py-2">
-                            Option Three
-                        </option>
+                        <option value="science" className="py-2">Science</option>
+                        <option value="technology" className="py-2">Technology</option>
+                        <option value="arts" className="py-2">Arts</option>
+                        <option value="literature" className="py-2">Literature</option>
+                        <option value="history" className="py-2">History</option>
+                        <option value="geography" className="py-2">Geography</option>
+                        <option value="philosophy" className="py-2">Philosophy</option>
+                        <option value="religion" className="py-2">Religion</option>
+                        <option value="social-science" className="py-2">Social Science</option>
+                        <option value="language" className="py-2">Language</option>
                     </select>
+
 
 
 
@@ -46,7 +48,7 @@ export default function Homepage() {
                     </div>
                 </div>
                 <section className=" flex flex-col mt-6 bg-slate-100 rounded-sm p-4">
-                    <Category  onSelect={setSelectedName}/>
+                    <Category onSelect={setSelectedName} />
                     <CategoryBook CategoryName={selectedName} />
                 </section>
 

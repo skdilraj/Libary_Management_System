@@ -12,23 +12,36 @@ export default function useAuthRedirect(requiredRole) {
       try {
         const res = await fetch("http://localhost:8000/api/auth/me", {
           credentials: "include",
+          cache: "no-store", // Prevent browser caching
         });
         const data = await res.json();
 
         if (res.ok && data.user?.role === requiredRole) {
           setAuthorized(true);
         } else {
-          router.replace("/unauthorized"); // or /login
+          setAuthorized(false); // explicitly set unauthorized
+          router.replace("/login"); // redirect if not authorized
         }
       } catch (err) {
-        router.replace("/unauthorized");
+        setAuthorized(false);
+        router.replace("/login"); // fallback to login
       } finally {
         setLoading(false);
       }
     };
 
     checkSession();
-  }, []);
+
+    // Optional: handle browser back button by forcing reload
+    const handlePopState = () => {
+      router.replace("/login"); // redirect if user hits back
+    };
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [router, requiredRole]);
 
   return { loading, authorized };
 }
